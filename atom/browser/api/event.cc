@@ -29,9 +29,7 @@ void Event::SetSenderAndMessage(content::RenderFrameHost* sender,
   Observe(content::WebContents::FromRenderFrameHost(sender));
 }
 
-void Event::RenderFrameDeleted(content::RenderFrameHost* rfh) {
-  if (sender_ != rfh)
-    return;
+void Event::WebContentsDestroyed() {
   sender_ = nullptr;
   message_ = nullptr;
 }
@@ -40,13 +38,6 @@ void Event::RenderFrameHostChanged(content::RenderFrameHost* old_rfh,
                                    content::RenderFrameHost* new_rfh) {
   if (sender_ && sender_ == old_rfh)
     sender_ = new_rfh;
-}
-
-void Event::FrameDeleted(content::RenderFrameHost* rfh) {
-  if (sender_ != rfh)
-    return;
-  sender_ = nullptr;
-  message_ = nullptr;
 }
 
 void Event::PreventDefault(v8::Isolate* isolate) {

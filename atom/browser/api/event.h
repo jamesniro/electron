@@ -37,10 +37,9 @@ class Event : public Wrappable<Event>, public content::WebContentsObserver {
   ~Event() override;
 
   // content::WebContentsObserver implementations:
-  void RenderFrameDeleted(content::RenderFrameHost* rfh) override;
+  void WebContentsDestroyed() override;
   void RenderFrameHostChanged(content::RenderFrameHost* old_rfh,
                               content::RenderFrameHost* new_rfh) override;
-  void FrameDeleted(content::RenderFrameHost* rfh) override;
 
  private:
   // Replyer for the synchronous messages.

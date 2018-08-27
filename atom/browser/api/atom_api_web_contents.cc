@@ -769,6 +769,14 @@ void WebContents::RenderViewDeleted(content::RenderViewHost* render_view_host) {
   Emit("render-view-deleted", render_view_host->GetProcess()->GetID());
 }
 
+void WebContents::RenderFrameHostChanged(content::RenderFrameHost* old_rfh,
+                                         content::RenderFrameHost* new_rfh) {
+  if (old_rfh) {
+    Emit("render-frame-changed", old_rfh->GetProcess()->GetID(),
+         new_rfh->GetProcess()->GetID());
+  }
+}
+
 void WebContents::RenderProcessGone(base::TerminationStatus status) {
   Emit("crashed", status == base::TERMINATION_STATUS_PROCESS_WAS_KILLED);
 }
